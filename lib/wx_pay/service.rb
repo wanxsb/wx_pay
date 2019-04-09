@@ -70,6 +70,7 @@ module WxPay
         params = {
           appid: options.delete(:appid) || WxPay.appid,
           mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          key: options.delete(:key) || WxPay.key,
           sub_appid: options.delete(:sub_appid),
           sub_mch_id: options.delete(:sub_mch_id),
           sub_openid: options.delete(:sub_openid),
@@ -100,6 +101,7 @@ module WxPay
         params = {
           appid: options.delete(:appid) || WxPay.appid,
           mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          key: options.delete(:key) || WxPay.key,
           sub_appid: options.delete(:sub_appid),
           sub_mch_id: options.delete(:sub_mch_id),
           sub_openid: options.delete(:sub_openid),
@@ -164,6 +166,7 @@ module WxPay
         params = {
           appid: options.delete(:appid) || WxPay.appid,
           mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          key: options.delete(:key) || WxPay.key,
           sub_appid: options.delete(:sub_appid),
           sub_mch_id: options.delete(:sub_mch_id),
           sub_openid: options.delete(:sub_openid),
@@ -202,6 +205,7 @@ module WxPay
         params = {
           appid: options.delete(:appid) || WxPay.appid,
           mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          key: options.delete(:key) || WxPay.key,
           sub_appid: options.delete(:sub_appid),
           sub_mch_id: options.delete(:sub_mch_id),
           sub_openid: options.delete(:sub_openid),
@@ -396,6 +400,7 @@ module WxPay
         params = {
           appid: options.delete(:appid) || WxPay.appid,
           mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          key: options.delete(:key) || WxPay.key,
           sub_appid: options.delete(:sub_appid),
           sub_mch_id: options.delete(:sub_mch_id),
           sub_openid: options.delete(:sub_openid),
@@ -425,6 +430,7 @@ module WxPay
         params = {
           appid: options.delete(:appid) || WxPay.appid,
           mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          key: options.delete(:key) || WxPay.key,
           sub_appid: options.delete(:sub_appid),
           sub_mch_id: options.delete(:sub_mch_id),
           sub_openid: options.delete(:sub_openid),
@@ -560,6 +566,7 @@ module WxPay
 
       def xmlify_payload(params, sign_type = WxPay::Sign::SIGN_TYPE_MD5)
         sign = WxPay::Sign.generate(params, sign_type)
+        Rails.logger.info "<xml>#{params.except(:key).sort.map { |k, v| "<#{k}>#{v}</#{k}>" }.join}<sign>#{sign}</sign></xml>"
         "<xml>#{params.except(:key).sort.map { |k, v| "<#{k}>#{v}</#{k}>" }.join}<sign>#{sign}</sign></xml>"
       end
 
