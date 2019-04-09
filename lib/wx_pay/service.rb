@@ -66,12 +66,24 @@ module WxPay
 
     INVOKE_UNIFIEDORDER_REQUIRED_FIELDS = [:body, :out_trade_no, :total_fee, :spbill_create_ip, :notify_url, :trade_type]
     def self.invoke_unifiedorder(params, options = {})
-      params = {
-        appid: options.delete(:appid) || WxPay.appid,
-        mch_id: options.delete(:mch_id) || WxPay.mch_id,
-        key: options.delete(:key) || WxPay.key,
-        nonce_str: SecureRandom.uuid.tr('-', '')
-      }.merge(params)
+      if options.delete(:is_agent_mode).present?
+        params = {
+          appid: options.delete(:appid) || WxPay.appid,
+          mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          sub_appid: options.delete(:sub_appid),
+          sub_mch_id: options.delete(:sub_mch_id),
+          sub_openid: options.delete(:sub_openid),
+          nonce_str: SecureRandom.uuid.tr('-', '')
+        }.merge(params)
+      else
+        params = {
+          appid: options.delete(:appid) || WxPay.appid,
+          mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          key: options.delete(:key) || WxPay.key,
+          openid: options.delete(:openid),
+          nonce_str: SecureRandom.uuid.tr('-', '')
+        }.merge(params)
+      end
 
       check_required_options(params, INVOKE_UNIFIEDORDER_REQUIRED_FIELDS)
 
@@ -84,12 +96,23 @@ module WxPay
 
     INVOKE_CLOSEORDER_REQUIRED_FIELDS = [:out_trade_no]
     def self.invoke_closeorder(params, options = {})
-      params = {
-        appid: options.delete(:appid) || WxPay.appid,
-        mch_id: options.delete(:mch_id) || WxPay.mch_id,
-        key: options.delete(:key) || WxPay.key,
-        nonce_str: SecureRandom.uuid.tr('-', '')
-      }.merge(params)
+      if options.delete(:is_agent_mode).present?
+        params = {
+          appid: options.delete(:appid) || WxPay.appid,
+          mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          sub_appid: options.delete(:sub_appid),
+          sub_mch_id: options.delete(:sub_mch_id),
+          sub_openid: options.delete(:sub_openid),
+          nonce_str: SecureRandom.uuid.tr('-', '')
+        }.merge(params)
+      else
+        params = {
+          appid: options.delete(:appid) || WxPay.appid,
+          mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          key: options.delete(:key) || WxPay.key,
+          nonce_str: SecureRandom.uuid.tr('-', '')
+        }.merge(params)
+      end
 
       check_required_options(params, INVOKE_CLOSEORDER_REQUIRED_FIELDS)
 
@@ -137,12 +160,23 @@ module WxPay
     INVOKE_REFUND_REQUIRED_FIELDS = [:out_refund_no, :total_fee, :refund_fee, :op_user_id]
     # out_trade_no 和 transaction_id 是二选一(必填)
     def self.invoke_refund(params, options = {})
-      params = {
-        appid: options.delete(:appid) || WxPay.appid,
-        mch_id: options.delete(:mch_id) || WxPay.mch_id,
-        key: options.delete(:key) || WxPay.key,
-        nonce_str: SecureRandom.uuid.tr('-', ''),
-      }.merge(params)
+      if options.delete(:is_agent_mode).present?
+        params = {
+          appid: options.delete(:appid) || WxPay.appid,
+          mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          sub_appid: options.delete(:sub_appid),
+          sub_mch_id: options.delete(:sub_mch_id),
+          sub_openid: options.delete(:sub_openid),
+          nonce_str: SecureRandom.uuid.tr('-', '')
+        }.merge(params)
+      else
+        params = {
+          appid: options.delete(:appid) || WxPay.appid,
+          mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          key: options.delete(:key) || WxPay.key,
+          nonce_str: SecureRandom.uuid.tr('-', ''),
+        }.merge(params)
+      end
 
       params[:op_user_id] ||= params[:mch_id]
 
@@ -164,12 +198,23 @@ module WxPay
 
     REFUND_QUERY_REQUIRED_FIELDS = [:out_trade_no]
     def self.refund_query(params, options = {})
-      params = {
-        appid: options.delete(:appid) || WxPay.appid,
-        mch_id: options.delete(:mch_id) || WxPay.mch_id,
-        key: options.delete(:key) || WxPay.key,
-        nonce_str: SecureRandom.uuid.tr('-', '')
-      }.merge(params)
+      if options.delete(:is_agent_mode).present?
+        params = {
+          appid: options.delete(:appid) || WxPay.appid,
+          mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          sub_appid: options.delete(:sub_appid),
+          sub_mch_id: options.delete(:sub_mch_id),
+          sub_openid: options.delete(:sub_openid),
+          nonce_str: SecureRandom.uuid.tr('-', '')
+        }.merge(params)
+      else
+        params = {
+          appid: options.delete(:appid) || WxPay.appid,
+          mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          key: options.delete(:key) || WxPay.key,
+          nonce_str: SecureRandom.uuid.tr('-', '')
+        }.merge(params)
+      end
 
       check_required_options(params, ORDER_QUERY_REQUIRED_FIELDS)
 
@@ -347,12 +392,23 @@ module WxPay
 
     ORDER_QUERY_REQUIRED_FIELDS = [:out_trade_no]
     def self.order_query(params, options = {})
-      params = {
-        appid: options.delete(:appid) || WxPay.appid,
-        mch_id: options.delete(:mch_id) || WxPay.mch_id,
-        key: options.delete(:key) || WxPay.key,
-        nonce_str: SecureRandom.uuid.tr('-', '')
-      }.merge(params)
+      if options.delete(:is_agent_mode).present?
+        params = {
+          appid: options.delete(:appid) || WxPay.appid,
+          mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          sub_appid: options.delete(:sub_appid),
+          sub_mch_id: options.delete(:sub_mch_id),
+          sub_openid: options.delete(:sub_openid),
+          nonce_str: SecureRandom.uuid.tr('-', '')
+        }.merge(params)
+      else
+        params = {
+          appid: options.delete(:appid) || WxPay.appid,
+          mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          key: options.delete(:key) || WxPay.key,
+          nonce_str: SecureRandom.uuid.tr('-', '')
+        }.merge(params)
+      end
 
 
       r = WxPay::Result.new(Hash.from_xml(invoke_remote("/pay/orderquery", make_payload(params), options)))
@@ -365,12 +421,23 @@ module WxPay
 
     DOWNLOAD_BILL_REQUIRED_FIELDS = [:bill_date, :bill_type]
     def self.download_bill(params, options = {})
-      params = {
-        appid: options.delete(:appid) || WxPay.appid,
-        mch_id: options.delete(:mch_id) || WxPay.mch_id,
-        key: options.delete(:key) || WxPay.key,
-        nonce_str: SecureRandom.uuid.tr('-', ''),
-      }.merge(params)
+      if options.delete(:is_agent_mode).present?
+        params = {
+          appid: options.delete(:appid) || WxPay.appid,
+          mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          sub_appid: options.delete(:sub_appid),
+          sub_mch_id: options.delete(:sub_mch_id),
+          sub_openid: options.delete(:sub_openid),
+          nonce_str: SecureRandom.uuid.tr('-', '')
+        }.merge(params)
+      else
+        params = {
+          appid: options.delete(:appid) || WxPay.appid,
+          mch_id: options.delete(:mch_id) || WxPay.mch_id,
+          key: options.delete(:key) || WxPay.key,
+          nonce_str: SecureRandom.uuid.tr('-', ''),
+        }.merge(params)
+      end
 
       check_required_options(params, DOWNLOAD_BILL_REQUIRED_FIELDS)
 
